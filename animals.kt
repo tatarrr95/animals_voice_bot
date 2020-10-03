@@ -3,8 +3,11 @@ require: slotfilling/slotFilling.sc
 theme: /
     state: Welcome
         q: * *start
-        a: Здравствуйте. Вас приветствует искусственный интеллект Валерия. Я вам помогу верно составиить заявление о плохом обращении с животными и помогу направить его в соответствующий орган. Для этого вам нужно ответить на несколько вопросов.
-        a: Опишите кратко, что произошло?
+        audio: https://cdn.alto-ai.ru/animals/bot_audio/hello_prompt.wav
+        audio: https://cdn.alto-ai.ru/animals/bot_audio/hello_part2_prompt.wav
+        audio: https://cdn.alto-ai.ru/animals/bot_audio/what_hapenned.wav
+        #a: Здравствуйте. Вас приветствует искусственный интеллект Валерия. Я вам помогу верно составиить заявление о плохом обращении с животными и помогу направить его в соответствующий орган. Для этого вам нужно ответить на несколько вопросов.
+        #a: Опишите кратко, что произошло?
         go!: What_happen
     
         state: What_happen
@@ -56,11 +59,13 @@ theme: /
                 go!: /Welcome/What_happen
                 
     state: Distruct
-        a: Чем было ранено животное?
+        #a: Чем было ранено животное?
+        audio: https://cdn.alto-ai.ru/animals/bot_audio/what_weapon_prompt.wav
 
         state: Gun
             intent: /огнестрельное_оружие
-            a: Животное ранили из огнестрельного оружия?
+            #a: Животное ранили из огнестрельного оружия?
+            audio: https://cdn.alto-ai.ru/animals/bot_audio/gun_prompt.wav
             state: No
                 intent: /нет
                 a: Извините, тогда не поняла.
@@ -100,7 +105,8 @@ theme: /
                 go!: /In_town
 
     state: In_town
-        a: Это произошло в черте города?
+        #a: Это произошло в черте города?
+        audio: https://cdn.alto-ai.ru/animals/bot_audio/hunter_place_prompt.wav
 
         state: No
             intent: /нет
@@ -113,7 +119,8 @@ theme: /
             go!: /Children
 
     state: Children
-        a: Свидедетелями данной ситуации были дети?
+        audio: https://cdn.alto-ai.ru/animals/bot_audio/children_prompt.wav
+        #a: Свидедетелями данной ситуации были дети?
 
         state: No
             intent: /нет
@@ -160,7 +167,8 @@ theme: /
             go!: /Free_text
 
     state: Free_text
-        a: Опишите в свободной форме, что произошло?
+        #a: Опишите в свободной форме, что произошло?
+        audio: https://cdn.alto-ai.ru/animals/bot_audio/free_text_prompt.wav
         
         state: Recognition
             q: *
@@ -184,7 +192,8 @@ theme: /
                     "home_animal": $session.home_animal,
                     "has_docs": $session.has_docs,
                     "town": $session.town,
-                    "free_text": $session.free_text
+                    "free_text": $session.free_text,
+                    "phone": $dialer.getCaller()
                 }
             };
             var response = $http.post(url, options);
@@ -195,4 +204,3 @@ theme: /
         event!: noMatch
         a: Извините, я вас не понял. Попробуйте переформулировать.
         
-
